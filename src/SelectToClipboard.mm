@@ -294,7 +294,7 @@ static void doAboutDlg()
         NSAlert *alert = [[NSAlert alloc] init];
         alert.messageText = @"About Selection to Clipboard";
         alert.informativeText =
-            @"Version: 1.1 (macOS port)\n\n"
+            @"Version: 1.0.0 (macOS port)\n\n"
             @"License: GPL v2\n\n"
             @"Author: Jakub Dvorak <dvorak.jakub@outlook.com>\n\n"
             @"Auto-copies the current selection to the system clipboard. "
