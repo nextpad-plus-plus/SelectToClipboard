@@ -188,7 +188,15 @@ static void CopyRoutine()
         if (ls == -1 || le == -1) continue;
 
         intptr_t len = le - ls;
-        if (len <= 0 && !isRect) continue;
+        // Defensive — negative length means the call returned something
+        // unexpected; don't try to read.
+        if (len < 0) continue;
+
+        // Note: len == 0 is a LEGITIMATE case for stream selection on empty
+        // lines (the selection passes through a blank line — no bytes to
+        // read, but the line's trailing newline still belongs in the output).
+        // The read below is skipped for len == 0 but the EOL append block
+        // further down still fires, preserving the empty line in the copy.
 
         if (len > 0) {
             // Allocate len+1 for SCI_GETTEXTRANGEFULL's trailing NUL,
