@@ -62,7 +62,7 @@ static intptr_t sci(NppHandle h, uint32_t msg, uintptr_t w = 0, intptr_t l = 0)
 static NSString *settingsPath()
 {
     // Ask the host for its plugin config directory (creates it if needed).
-    // Falls back to ~/.notepad++ for robustness if the host doesn't
+    // Falls back to ~/.nextpad++ for robustness if the host doesn't
     // implement NPPM_GETPLUGINSCONFIGDIR.
     char buf[1024] = {};
     nppData._sendMessage(nppData._nppHandle,
@@ -73,7 +73,7 @@ static NSString *settingsPath()
     if (buf[0] != '\0') {
         dir = [NSString stringWithUTF8String:buf];
     } else {
-        dir = [NSHomeDirectory() stringByAppendingPathComponent:@".notepad++"];
+        dir = [NSHomeDirectory() stringByAppendingPathComponent:@".nextpad++"];
         [[NSFileManager defaultManager] createDirectoryAtPath:dir
                                   withIntermediateDirectories:YES
                                                    attributes:nil
@@ -85,12 +85,12 @@ static NSString *settingsPath()
 static void loadSettings()
 {
     @autoreleasepool {
-        // Migrate from the pre-fix settings location (~/.notepad++/SelectToClipboard.json)
+        // Migrate from the pre-fix settings location (~/.nextpad++/SelectToClipboard.json)
         // to the host's plugin config directory. Silently no-op if nothing
         // to migrate or the destination already exists.
         NSString *newPath = settingsPath();
         NSString *oldPath = [NSHomeDirectory() stringByAppendingPathComponent:
-                             @".notepad++/SelectToClipboard.json"];
+                             @".nextpad++/SelectToClipboard.json"];
         NSFileManager *fm = [NSFileManager defaultManager];
         if (![newPath isEqualToString:oldPath] &&
             [fm fileExistsAtPath:oldPath] &&

@@ -30,5 +30,5 @@ set_target_properties(SelectToClipboard PROPERTIES
     OUTPUT_NAME "SelectToClipboard"
 )
 
-set(PLUGIN_INSTALL_DIR "$ENV{HOME}/.notepad++/plugins/SelectToClipboard")
+set(PLUGIN_INSTALL_DIR "$ENV{HOME}/.nextpad++/plugins/SelectToClipboard")
 install(TARGETS SelectToClipboard DESTINATION "${PLUGIN_INSTALL_DIR}")
