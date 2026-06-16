@@ -62,8 +62,8 @@ static intptr_t sci(NppHandle h, uint32_t msg, uintptr_t w = 0, intptr_t l = 0)
 static NSString *settingsPath()
 {
     // Ask the host for its plugin config directory (creates it if needed).
-    // Falls back to ~/.nextpad++ for robustness if the host doesn't
-    // implement NPPM_GETPLUGINSCONFIGDIR.
+    // Falls back to ~/Library/Application Support/Nextpad++/plugins/Config if the
+    // host returns empty (it does not on shipped versions).
     char buf[1024] = {};
     nppData._sendMessage(nppData._nppHandle,
                          NPPM_GETPLUGINSCONFIGDIR,
@@ -73,7 +73,9 @@ static NSString *settingsPath()
     if (buf[0] != '\0') {
         dir = [NSString stringWithUTF8String:buf];
     } else {
-        dir = [NSHomeDirectory() stringByAppendingPathComponent:@".nextpad++"];
+        dir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
+                   NSUserDomainMask, YES).firstObject
+                   stringByAppendingPathComponent:@"Nextpad++/plugins/Config"];
         [[NSFileManager defaultManager] createDirectoryAtPath:dir
                                   withIntermediateDirectories:YES
                                                    attributes:nil

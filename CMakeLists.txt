@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(SelectToClipboard LANGUAGES CXX OBJCXX)
+project(SelectToClipboard VERSION 1.0.2 LANGUAGES CXX OBJCXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_OBJCXX_STANDARD 17)
@@ -30,5 +30,8 @@ set_target_properties(SelectToClipboard PROPERTIES
     OUTPUT_NAME "SelectToClipboard"
 )
 
-set(PLUGIN_INSTALL_DIR "$ENV{HOME}/.nextpad++/plugins/SelectToClipboard")
+# Stamp version into the dylib Mach-O current_version (Plugins Admin reads it).
+target_link_options(SelectToClipboard PRIVATE "-Wl,-current_version,${PROJECT_VERSION}")
+
+set(PLUGIN_INSTALL_DIR "$ENV{HOME}/Library/Application Support/Nextpad++/plugins/SelectToClipboard")
 install(TARGETS SelectToClipboard DESTINATION "${PLUGIN_INSTALL_DIR}")
